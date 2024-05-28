@@ -4,7 +4,16 @@ import 'package:settings_page/views/screens/settings_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   final ValueChanged<bool> onThemeChanged;
-  const CustomDrawer({super.key, required this.onThemeChanged});
+  final ValueChanged<String> onBackgroundImageChanged;
+  final ValueChanged<String> onScaffoldColorChanged;
+  final ValueChanged<String> onAppBarColorChanged;
+  const CustomDrawer({
+    super.key,
+    required this.onThemeChanged,
+    required this.onBackgroundImageChanged,
+    required this.onScaffoldColorChanged,
+    required this.onAppBarColorChanged,
+  });
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -31,6 +40,9 @@ class CustomDrawer extends StatelessWidget {
                   builder: (ctx) {
                     return HomeScreen(
                       onThemeChanged: onThemeChanged,
+                      onBackgroundImageChanged: onBackgroundImageChanged,
+                      onScaffoldColorChanged: onScaffoldColorChanged,
+                      onAppBarColorChanged: onAppBarColorChanged,
                     );
                   },
                 ),
@@ -48,6 +60,9 @@ class CustomDrawer extends StatelessWidget {
                   builder: (ctx) {
                     return SettingsScreen(
                       onThemeChanged: onThemeChanged,
+                      onBackgroundImageChanged: onBackgroundImageChanged,
+                      onScaffoldColorChanged: onScaffoldColorChanged,
+                      onAppBarColorChanged: onAppBarColorChanged,
                     );
                   },
                 ),
