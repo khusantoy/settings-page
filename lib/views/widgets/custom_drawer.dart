@@ -7,12 +7,16 @@ class CustomDrawer extends StatelessWidget {
   final ValueChanged<String> onBackgroundImageChanged;
   final ValueChanged<String> onScaffoldColorChanged;
   final ValueChanged<String> onAppBarColorChanged;
+  final ValueChanged<String> onLanguageChanged;
+  final ValueChanged<String> onFontSizeChanged;
   const CustomDrawer({
     super.key,
     required this.onThemeChanged,
     required this.onBackgroundImageChanged,
     required this.onScaffoldColorChanged,
     required this.onAppBarColorChanged,
+    required this.onLanguageChanged,
+    required this.onFontSizeChanged,
   });
   @override
   Widget build(BuildContext context) {
@@ -43,6 +47,8 @@ class CustomDrawer extends StatelessWidget {
                       onBackgroundImageChanged: onBackgroundImageChanged,
                       onScaffoldColorChanged: onScaffoldColorChanged,
                       onAppBarColorChanged: onAppBarColorChanged,
+                      onLanguageChanged: onLanguageChanged,
+                      onFontSizeChanged: onFontSizeChanged,
                     );
                   },
                 ),
@@ -63,6 +69,8 @@ class CustomDrawer extends StatelessWidget {
                       onBackgroundImageChanged: onBackgroundImageChanged,
                       onScaffoldColorChanged: onScaffoldColorChanged,
                       onAppBarColorChanged: onAppBarColorChanged,
+                      onLanguageChanged: onLanguageChanged,
+                      onFontSizeChanged: onFontSizeChanged
                     );
                   },
                 ),

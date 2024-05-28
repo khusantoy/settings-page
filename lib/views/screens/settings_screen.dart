@@ -7,6 +7,8 @@ class SettingsScreen extends StatefulWidget {
   final ValueChanged<String> onBackgroundImageChanged;
   final ValueChanged<String> onScaffoldColorChanged;
   final ValueChanged<String> onAppBarColorChanged;
+  final ValueChanged<String> onLanguageChanged;
+  final ValueChanged<String> onFontSizeChanged;
 
   const SettingsScreen({
     super.key,
@@ -14,6 +16,8 @@ class SettingsScreen extends StatefulWidget {
     required this.onBackgroundImageChanged,
     required this.onScaffoldColorChanged,
     required this.onAppBarColorChanged,
+    required this.onLanguageChanged,
+    required this.onFontSizeChanged,
   });
   @override
   State<SettingsScreen> createState() {
@@ -23,8 +27,10 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   final imageController = TextEditingController();
-  String scaffoldDropdownColorValue = "amber";
-  String appBarDropdownColorValue = "amber";
+  String? scaffoldDropdownColorValue;
+  String? appBarDropdownColorValue;
+  String appLang = 'en';
+  String fontScaling = '1';
   @override
   void initState() {
     super.initState();
@@ -42,13 +48,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: AppConstants.scaffoldColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: Text(
+          "Settings",
+          style: TextStyle(
+            fontSize: 20 * AppConstants.fontScaling,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withOpacity(0.5),
+              ),
+              child: Text(AppConstants.language),
+            ),
+          )
+        ],
       ),
       drawer: CustomDrawer(
         onThemeChanged: widget.onThemeChanged,
         onBackgroundImageChanged: widget.onBackgroundImageChanged,
         onScaffoldColorChanged: widget.onScaffoldColorChanged,
         onAppBarColorChanged: widget.onAppBarColorChanged,
+        onLanguageChanged: widget.onLanguageChanged,
+        onFontSizeChanged: widget.onFontSizeChanged,
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -68,7 +94,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SwitchListTile(
               value: AppConstants.themeMode == ThemeMode.dark,
               onChanged: widget.onThemeChanged,
-              title: const Text("Dark Mode"),
+              title: Text(
+                "Dark Mode",
+                style: TextStyle(
+                  fontSize: 14 * AppConstants.fontScaling,
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(15),
@@ -76,9 +107,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   TextField(
                     controller: imageController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
                       hintText: "Paste image URL here",
+                      hintStyle: TextStyle(
+                        fontSize: 14 * AppConstants.fontScaling,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -90,14 +124,24 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       imageController.clear();
                       widget.onBackgroundImageChanged(imageUrl);
                     },
-                    child: const Text("Save Image"),
+                    child: Text(
+                      "Save Image",
+                      style: TextStyle(
+                        fontSize: 14 * AppConstants.fontScaling,
+                      ),
+                    ),
                   ),
                   const SizedBox(
                     height: 30,
                   ),
                   Row(
                     children: [
-                      const Text("Select color for Scaffold:"),
+                      Text(
+                        "Select color for Scaffold:",
+                        style: TextStyle(
+                          fontSize: 14 * AppConstants.fontScaling,
+                        ),
+                      ),
                       const SizedBox(
                         width: 20,
                       ),
@@ -115,8 +159,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            hint: Text(
+                              "Colors",
+                              style: TextStyle(
+                                fontSize: 14 * AppConstants.fontScaling,
+                              ),
+                            ),
                             value: scaffoldDropdownColorValue,
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
                             items: const [
                               DropdownMenuItem(
                                 value: "amber",
@@ -158,7 +208,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onChanged: (newValue) {
                               scaffoldDropdownColorValue = newValue!;
                               widget.onScaffoldColorChanged(
-                                scaffoldDropdownColorValue,
+                                scaffoldDropdownColorValue!,
                               );
                             },
                           ),
@@ -171,7 +221,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   Row(
                     children: [
-                      const Text("Select color for AppBar:"),
+                      Text(
+                        "Select color for AppBar:",
+                        style: TextStyle(
+                          fontSize: 14 * AppConstants.fontScaling,
+                        ),
+                      ),
                       const SizedBox(
                         width: 20,
                       ),
@@ -189,6 +244,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         ),
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton(
+                            hint: const Text("Colors"),
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             value: appBarDropdownColorValue,
                             items: const [
@@ -232,7 +288,121 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             onChanged: (newValue) {
                               appBarDropdownColorValue = newValue!;
                               widget.onAppBarColorChanged(
-                                appBarDropdownColorValue,
+                                appBarDropdownColorValue!,
+                              );
+                              setState(() {});
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Select App Language:",
+                        style: TextStyle(
+                          fontSize: 14 * AppConstants.fontScaling,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        decoration: ShapeDecoration(
+                          color: AppConstants.themeMode == ThemeMode.dark
+                              ? Colors.black
+                              : Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                                width: 1.0, style: BorderStyle.solid),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            value: appLang,
+                            items: const [
+                              DropdownMenuItem(
+                                value: "uz",
+                                child: Text("UZ"),
+                              ),
+                              DropdownMenuItem(
+                                value: "en",
+                                child: Text("EN"),
+                              ),
+                              DropdownMenuItem(
+                                value: "ru",
+                                child: Text("RU"),
+                              ),
+                            ],
+                            onChanged: (newValue) {
+                              appLang = newValue!;
+                              widget.onLanguageChanged(
+                                appLang,
+                              );
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Select font scaling:",
+                        style: TextStyle(
+                          fontSize: 14 * AppConstants.fontScaling,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Container(
+                        decoration: ShapeDecoration(
+                          color: AppConstants.themeMode == ThemeMode.dark
+                              ? Colors.black
+                              : Colors.white,
+                          shape: const RoundedRectangleBorder(
+                            side: BorderSide(
+                              width: 1.0,
+                              style: BorderStyle.solid,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(5.0),
+                            ),
+                          ),
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            value: fontScaling,
+                            items: const [
+                              DropdownMenuItem(
+                                value: "1",
+                                child: Text("1"),
+                              ),
+                              DropdownMenuItem(
+                                value: "2",
+                                child: Text("2"),
+                              ),
+                              DropdownMenuItem(
+                                value: "3",
+                                child: Text("3"),
+                              ),
+                            ],
+                            onChanged: (newValue) {
+                              fontScaling = newValue!;
+                              widget.onFontSizeChanged(
+                                fontScaling,
                               );
                               setState(() {});
                             },
