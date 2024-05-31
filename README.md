@@ -6,6 +6,10 @@ A new Flutter project.
 https://github.com/khusantoy/settings-page/assets/119614237/d134dbfe-304b-4244-b2a3-25e637599023
 
 
+
+https://github.com/khusantoy/settings-page/assets/119614237/519b7bb0-eda3-40d0-870d-59f66e778d64
+
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
