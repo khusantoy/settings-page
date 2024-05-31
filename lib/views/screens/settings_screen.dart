@@ -45,7 +45,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConstants.scaffoldColor,
+      backgroundColor: AppConstants.scaffoldColor == 'amber'
+          ? Colors.amber
+          : AppConstants.scaffoldColor == 'green'
+              ? Colors.green
+              : AppConstants.scaffoldColor == 'blue'
+                  ? Colors.blue
+                  : AppConstants.scaffoldColor == 'red'
+                      ? Colors.red
+                      : Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
@@ -80,6 +88,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
+          color: AppConstants.scaffoldColor == 'amber'
+              ? Colors.amber
+              : AppConstants.scaffoldColor == 'green'
+                  ? Colors.green
+                  : AppConstants.scaffoldColor == 'blue'
+                      ? Colors.blue
+                      : AppConstants.scaffoldColor == 'red'
+                          ? Colors.red
+                          : null,
           image: AppConstants.backgroundImageUrl.isEmpty
               ? null
               : DecorationImage(
@@ -92,7 +109,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         child: ListView(
           children: [
             SwitchListTile(
-              value: AppConstants.themeMode == ThemeMode.dark,
+              value: AppConstants.themeMode == 'dark',
               onChanged: widget.onThemeChanged,
               title: Text(
                 "Dark Mode",
@@ -147,7 +164,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Container(
                         decoration: ShapeDecoration(
-                          color: AppConstants.themeMode == ThemeMode.dark
+                          color: AppConstants.themeMode == 'dark'
                               ? Colors.black
                               : Colors.white,
                           shape: const RoundedRectangleBorder(
@@ -203,7 +220,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     color: Colors.red,
                                   ),
                                 ),
-                              )
+                              ),
                             ],
                             onChanged: (newValue) {
                               scaffoldDropdownColorValue = newValue!;
@@ -232,7 +249,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Container(
                         decoration: ShapeDecoration(
-                          color: AppConstants.themeMode == ThemeMode.dark
+                          color: AppConstants.themeMode == 'dark'
                               ? Colors.black
                               : Colors.white,
                           shape: const RoundedRectangleBorder(
@@ -313,7 +330,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Container(
                         decoration: ShapeDecoration(
-                          color: AppConstants.themeMode == ThemeMode.dark
+                          color: AppConstants.themeMode == 'dark'
                               ? Colors.black
                               : Colors.white,
                           shape: const RoundedRectangleBorder(
@@ -368,7 +385,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       Container(
                         decoration: ShapeDecoration(
-                          color: AppConstants.themeMode == ThemeMode.dark
+                          color: AppConstants.themeMode == "dark"
                               ? Colors.black
                               : Colors.white,
                           shape: const RoundedRectangleBorder(

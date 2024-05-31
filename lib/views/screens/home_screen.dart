@@ -4,7 +4,7 @@ import 'package:settings_page/views/widgets/custom_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   final ValueChanged<bool> onThemeChanged;
-  final ValueChanged<String> onBackgroundImageChanged;
+  final Function(String) onBackgroundImageChanged;
   final ValueChanged<String> onScaffoldColorChanged;
   final ValueChanged<String> onAppBarColorChanged;
   final ValueChanged<String> onLanguageChanged;
@@ -33,7 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppConstants.scaffoldColor,
+      backgroundColor: AppConstants.scaffoldColor == 'amber'
+              ? Colors.amber
+              : AppConstants.scaffoldColor == 'green'
+                  ? Colors.green
+                  : AppConstants.scaffoldColor == 'blue'
+                      ? Colors.blue
+                      : AppConstants.scaffoldColor == 'red' ? Colors.red : null,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
